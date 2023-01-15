@@ -1,25 +1,40 @@
-import errorHandler from "errorhandler";
-import app from "./app";
+import dotenv from "dotenv";
 
+import { ChatGPTAPIBrowser } from "chatgpt";
+
+dotenv.config();
 
 /**
- * Error Handler. Provides full stack
+ * Demo CLI for testing basic functionality using Google auth.
+ *
+ * ```
+ * npx tsx demos/demo.ts
+ * ```
  */
-if (process.env.NODE_ENV === "development") {
-    app.use(errorHandler());
+async function main() {
+  const email = process.env.OPENAI_EMAIL;
+  const password = process.env.OPENAI_PASSWORD;
+
+  const api = new ChatGPTAPIBrowser({
+    email,
+    password,
+    isGoogleLogin: true,
+    debug: false,
+    minimize: true
+  });
+  await api.initSession();
+
+  const prompt =
+    "Write a python version of bubble sort. Do not include example usage.";
+
+  const res = await api.sendMessage(prompt);
+  console.log(res.response);
+
+  // close the browser at the end
+  await api.closeSession();
 }
 
-
-/**
- * Start Express server.
- */
-const server = app.listen(app.get("port"), () => {
-    console.log(
-        "  App is running at http://localhost:%d in %s mode",
-        app.get("port"),
-        app.get("env")
-    );
-    console.log("  Press CTRL-C to stop\n");
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
 });
-
-export default server;

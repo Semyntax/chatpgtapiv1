@@ -1,8 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-    - 12
-    - 14
+    - 18
 services:
     - mongodb
 cache:

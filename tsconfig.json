@@ -1,22 +1,26 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "lib": [
+            "esnext"
+        ],
+        "module": "esnext",
+        "skipLibCheck": true,
+        "allowJs": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "target": "es6",
-        "noImplicitAny": true,
+        "target": "es2020",
+        "noImplicitAny": false,
         "moduleResolution": "node",
+        "isolatedModules": true,
         "sourceMap": true,
         "outDir": "dist",
         "baseUrl": ".",
-        "paths": {
-            "*": [
-                "node_modules/*",
-                "src/types/*"
-            ]
-        }
     },
+    "exclude": [
+        "node_modules",
+        "build"
+    ],
     "include": [
-        "src/**/*"
-    ]
+        "src/**/*.ts"
+    ],
 }
